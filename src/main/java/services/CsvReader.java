@@ -13,7 +13,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @NoArgsConstructor
 public class CsvReader implements Reader
@@ -90,11 +92,13 @@ public class CsvReader implements Reader
                 int id = Integer.parseInt(rows.get(i)[0]);
                 dynamicData.setId(id);
 
-                List<Pair<String, String>> data = new ArrayList<>();
+                List<Map<String, String>> data = new ArrayList<>();
 
                 for(int j = 0; j < header.size(); j++)
                 {
-                    Pair<String, String> pair = Pair.of(header.get(j), rows.get(i)[j+1]);
+                    Map<String, String> pair = new HashMap<>(); //Pair.of(header.get(j), rows.get(i)[j+1]);
+                   // data.add(pair);
+                    pair.put(header.get(j), rows.get(i)[j+1]);
                     data.add(pair);
                 }
                 dynamicData.setData(data);
