@@ -1,4 +1,5 @@
 import com.opencsv.exceptions.CsvException;
+import models.DynamicData;
 import models.Person;
 import org.apache.commons.collections4.iterators.PeekingIterator;
 import services.CsvReader;
@@ -12,13 +13,14 @@ public class Main
     {
         CsvReader csvReader = new CsvReader();
 
-        csvReader.readCsvFile("C:\\Users\\km250542\\Downloads\\MOCK_DATA.csv");
-       // csvReader.displayFileReader();
-        List<Person> persons = csvReader.convertCsv();
-
-        for (Person p: persons)
+        csvReader.readCsvFile("C:\\Users\\km250542\\Downloads\\MOCK_DATA2.csv");
+        List<DynamicData> list = csvReader.dynamicConvert();
+        // csvReader.displayFileReader();
+//        List<Person> persons = csvReader.convertCsv();
+//
+        for (DynamicData p: list)
         {
-            System.out.println(p.getId());
+            System.out.println(p);
         }
     }
 }

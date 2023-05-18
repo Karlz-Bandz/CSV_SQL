@@ -4,7 +4,9 @@ import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import interfaces.Reader;
 import lombok.NoArgsConstructor;
+import models.DynamicData;
 import models.Person;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -12,7 +14,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 
 @NoArgsConstructor
 public class CsvReader implements Reader
@@ -65,5 +66,51 @@ public class CsvReader implements Reader
             System.out.println("File not found in convertCsv method");
         }
         return persons;
+    }
+
+    @Override
+    public List<DynamicData> dynamicConvert() throws IOException, CsvException
+    {
+        List<DynamicData> dynamicDataList = new ArrayList<>();
+
+        if(this.fileReader != null)
+        {
+            CSVReader csvReader = new CSVReader(this.fileReader);
+            List<String[]> rows = csvReader.readAll();
+            List<String> header = new ArrayList<>();
+
+            for(int i = 1; i < rows.get(0).length; i++)
+            {
+                header.add(rows.get(0)[i]);
+            }
+
+            for(int i = 1; i < rows.size(); i++)
+            {
+                DynamicData dynamicData = new DynamicData();
+                int id = Integer.parseInt(rows.get(i)[0]);
+                dynamicData.setId(id);
+
+                List<Pair<String, String>> data = new ArrayList<>();
+
+                for(int j = 0; j < header.size(); j++)
+                {
+                    Pair<String, String> pair = Pair.of(header.get(j), rows.get(i)[j+1]);
+                    data.add(pair);
+                }
+                dynamicData.setData(data);
+
+                dynamicDataList.add(dynamicData);
+            }
+
+//            for(String i: header){
+//                System.out.println(i);
+//            }
+
+        }else{
+            System.out.println("File not found in dynamicConvert method");
+        }
+
+
+        return dynamicDataList;
     }
 }
