@@ -13,7 +13,7 @@ public class Main
     {
         CsvReader csvReader = new CsvReader();
 
-        csvReader.readCsvFile("C:\\Users\\km250542\\Downloads\\MOCK_DATA2.csv");
+        csvReader.readCsvFile("C:\\Users\\km250542\\Downloads\\MOCK_DATA.csv");
         List<DynamicData> list = csvReader.dynamicConvert();
         // csvReader.displayFileReader();
 //        List<Person> persons = csvReader.convertCsv();
