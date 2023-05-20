@@ -92,14 +92,11 @@ public class CsvReader implements Reader
                 int id = Integer.parseInt(rows.get(i)[0]);
                 dynamicData.setId(id);
 
-                List<Map<String, String>> data = new ArrayList<>();
+                Map<String, String> data = new HashMap<>();
 
                 for(int j = 0; j < header.size(); j++)
                 {
-                    Map<String, String> pair = new HashMap<>(); //Pair.of(header.get(j), rows.get(i)[j+1]);
-                   // data.add(pair);
-                    pair.put(header.get(j), rows.get(i)[j+1]);
-                    data.add(pair);
+                    data.put(header.get(j), rows.get(i)[j+1]);
                 }
                 dynamicData.setData(data);
 
