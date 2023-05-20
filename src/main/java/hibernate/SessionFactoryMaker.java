@@ -1,6 +1,6 @@
 package hibernate;
 
-import models.DynamicData;
+import models.entity.DynamicData;
 import models.entity.MainData;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

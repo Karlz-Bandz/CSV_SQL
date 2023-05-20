@@ -4,9 +4,8 @@ import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import interfaces.Reader;
 import lombok.NoArgsConstructor;
-import models.DynamicData;
+import models.entity.DynamicData;
 import models.Person;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -25,14 +24,16 @@ public class CsvReader implements Reader
     @Override
     public void displayFileReader() throws IOException
     {
-        if(this.fileReader != null)
+        if (this.fileReader != null)
         {
             BufferedReader bufferedReader = new BufferedReader(this.fileReader);
             String line;
-            while ((line = bufferedReader.readLine()) != null){
+            while ((line = bufferedReader.readLine()) != null)
+            {
                 System.out.println(line);
             }
-        }else{
+        } else
+        {
             System.out.println("FileReader object is null");
         }
     }
@@ -40,9 +41,10 @@ public class CsvReader implements Reader
     @Override
     public void readCsvFile(String path)
     {
-        try{
+        try
+        {
             fileReader = new FileReader(path);
-        }catch (FileNotFoundException e)
+        } catch (FileNotFoundException e)
         {
             System.out.println("File not found!");
         }
@@ -53,18 +55,19 @@ public class CsvReader implements Reader
     {
         List<Person> persons = new ArrayList<>();
 
-        if(this.fileReader != null)
+        if (this.fileReader != null)
         {
             CSVReader csvReader = new CSVReader(this.fileReader);
             List<String[]> rows = csvReader.readAll();
 
-            for(int i = 1; i < rows.size(); i++)
+            for (int i = 1; i < rows.size(); i++)
             {
                 int id = Integer.parseInt(rows.get(i)[0]);
                 Person person = new Person(id, rows.get(i)[1], rows.get(i)[2]);
                 persons.add(person);
             }
-        }else{
+        } else
+        {
             System.out.println("File not found in convertCsv method");
         }
         return persons;
@@ -75,43 +78,37 @@ public class CsvReader implements Reader
     {
         List<DynamicData> dynamicDataList = new ArrayList<>();
 
-        if(this.fileReader != null)
+        if (this.fileReader != null)
         {
             CSVReader csvReader = new CSVReader(this.fileReader);
             List<String[]> rows = csvReader.readAll();
             List<String> header = new ArrayList<>();
 
-            for(int i = 1; i < rows.get(0).length; i++)
+            for (int i = 0; i < rows.get(0).length; i++)
             {
                 header.add(rows.get(0)[i]);
             }
 
-            for(int i = 1; i < rows.size(); i++)
+            for (int i = 1; i < rows.size(); i++)
             {
                 DynamicData dynamicData = new DynamicData();
-                int id = Integer.parseInt(rows.get(i)[0]);
-                dynamicData.setId(id);
+//                int id = Integer.parseInt(rows.get(i)[0]);
+//                dynamicData.setId(id);
 
                 Map<String, String> data = new HashMap<>();
 
-                for(int j = 0; j < header.size(); j++)
+                for (int j = 0; j < header.size(); j++)
                 {
-                    data.put(header.get(j), rows.get(i)[j+1]);
+                    data.put(header.get(j), rows.get(i)[j]);
                 }
                 dynamicData.setData(data);
 
                 dynamicDataList.add(dynamicData);
             }
-
-//            for(String i: header){
-//                System.out.println(i);
-//            }
-
-        }else{
+        } else
+        {
             System.out.println("File not found in dynamicConvert method");
         }
-
-
         return dynamicDataList;
     }
 }
