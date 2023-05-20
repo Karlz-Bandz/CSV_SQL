@@ -5,6 +5,7 @@ import models.entity.MainData;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import services.CsvReader;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,17 +18,17 @@ public class Main
 {
     public static void main(String[] args) throws IOException, CsvException
     {
-//        CsvReader csvReader = new CsvReader();
+        CsvReader csvReader = new CsvReader();
+
+        csvReader.readCsvFile("C:\\Users\\km250542\\Downloads\\MOCK_DATA.csv");
+        List<DynamicData> list = csvReader.dynamicConvert();
+        // csvReader.displayFileReader();
+//        List<Person> persons = csvReader.convertCsv();
 //
-//        csvReader.readCsvFile("C:\\Users\\km250542\\Downloads\\MOCK_DATA.csv");
-//        List<DynamicData> list = csvReader.dynamicConvert();
-//        // csvReader.displayFileReader();
-////        List<Person> persons = csvReader.convertCsv();
-////
-//        for (DynamicData p: list)
-//        {
-//            System.out.println(p);
-//        }
+        for (DynamicData p: list)
+        {
+            System.out.println(p);
+        }
 
         List<Map<String, String>> testList = new ArrayList<>();
         Map<String, String> testMap = new HashMap<>();
