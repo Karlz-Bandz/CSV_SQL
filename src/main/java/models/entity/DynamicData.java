@@ -1,4 +1,4 @@
-package models;
+package models.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,6 +15,7 @@ import java.util.Map;
 public class DynamicData
 {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ElementCollection
     @CollectionTable(name = "values")

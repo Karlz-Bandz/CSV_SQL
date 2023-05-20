@@ -1,7 +1,7 @@
 package interfaces;
 
 import com.opencsv.exceptions.CsvException;
-import models.DynamicData;
+import models.entity.DynamicData;
 import models.Person;
 
 import java.io.IOException;

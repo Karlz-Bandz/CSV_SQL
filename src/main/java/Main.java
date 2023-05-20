@@ -1,6 +1,6 @@
 import com.opencsv.exceptions.CsvException;
 import hibernate.SessionFactoryMaker;
-import models.DynamicData;
+import models.entity.DynamicData;
 import models.entity.MainData;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -20,12 +20,10 @@ public class Main
     {
         CsvReader csvReader = new CsvReader();
 
-        csvReader.readCsvFile("C:\\Users\\km250542\\Downloads\\MOCK_DATA.csv");
+        csvReader.readCsvFile("C:\\Users\\km250542\\Downloads\\MOCK_DATA66.csv");
         List<DynamicData> list = csvReader.dynamicConvert();
-        // csvReader.displayFileReader();
-//        List<Person> persons = csvReader.convertCsv();
-//
-        for (DynamicData p: list)
+
+        for (DynamicData p : list)
         {
             System.out.println(p);
         }
@@ -40,11 +38,17 @@ public class Main
 
         SessionFactory factory = SessionFactoryMaker.getFactory();
 
-        try (Session session = factory.openSession()) {
+        try (Session session = factory.openSession())
+        {
             Transaction tx = session.beginTransaction();
-            session.save(dynamicDataTest);
+            session.persist(dynamicDataTest);
+            for (DynamicData d : list)
+            {
+                session.persist(d);
+            }
             tx.commit();
-        } catch (Exception ex) {
+        } catch (Exception ex)
+        {
             ex.printStackTrace();
         }
     }

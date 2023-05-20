@@ -1,6 +1,6 @@
 //package jpa;
 //
-//import models.DynamicData;
+//import models.entity.DynamicData;
 //import org.springframework.data.jpa.repository.JpaRepository;
 //import org.springframework.stereotype.Repository;
 //
