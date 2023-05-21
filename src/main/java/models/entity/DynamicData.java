@@ -22,4 +22,9 @@ public class DynamicData
     @MapKeyColumn(name = "key")
     @Column(name = "value")
     private Map<String, String> data;
+
+    public DynamicData(Map<String, String> data)
+    {
+        this.data = data;
+    }
 }

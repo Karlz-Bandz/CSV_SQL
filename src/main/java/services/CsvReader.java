@@ -7,10 +7,7 @@ import lombok.NoArgsConstructor;
 import models.entity.DynamicData;
 import models.Person;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,15 +36,27 @@ public class CsvReader implements Reader
     }
 
     @Override
-    public void readCsvFile(String path)
+    public boolean readCsvFile(String path)
     {
         try
         {
-            fileReader = new FileReader(path);
+            File file = new File(path);
+            if (file.isFile() && file.exists() && path.endsWith(".csv"))
+            {
+                fileReader = new FileReader(file);
+                return true;
+            } else
+            {
+                System.out.println("Is not .csv file");
+            }
         } catch (FileNotFoundException e)
         {
             System.out.println("File not found!");
+        } catch (SecurityException e)
+        {
+            System.out.println("Security exception!");
         }
+        return false;
     }
 
     @Override
@@ -92,8 +101,6 @@ public class CsvReader implements Reader
             for (int i = 1; i < rows.size(); i++)
             {
                 DynamicData dynamicData = new DynamicData();
-//                int id = Integer.parseInt(rows.get(i)[0]);
-//                dynamicData.setId(id);
 
                 Map<String, String> data = new HashMap<>();
 
