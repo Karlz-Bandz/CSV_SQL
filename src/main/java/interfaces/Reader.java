@@ -11,7 +11,7 @@ public interface Reader
 {
     void displayFileReader() throws IOException;
 
-    void readCsvFile(String path);
+    boolean readCsvFile(String path);
 
     List<Person> convertCsv() throws IOException, CsvException;
 
