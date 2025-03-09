@@ -30,7 +30,7 @@
         </property>
 
         <!-- Add your entity classes -->
-        <mapping class="models.entity.MainData"/>
+        <mapping class="model.DynamicData"/>
     </session-factory>
 </hibernate-configuration>
 

@@ -4,11 +4,41 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0fb700e5-3304-4168-b236-304fd6f51f4a" name="Changes" comment="" />
+    <list default="true" id="0fb700e5-3304-4168-b236-304fd6f51f4a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/DynamicData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/services/CsvService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/services/impl/CsvServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/hibernate.cfg.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/AppDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AppDriver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hibernate/SessionFactoryMaker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hibernate/SessionFactoryMaker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/interfaces/Reader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/models/Person.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/models/entity/DynamicData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/models/entity/MainData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/CsvReader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/AppDriver.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/AppDriver.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/hibernate/SessionFactoryMaker.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hibernate/SessionFactoryMaker.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/interfaces/Reader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/models/Person.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/models/entity/DynamicData.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/models/entity/MainData.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/services/CsvReader.class" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -21,6 +51,9 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="2twEMwGKfqoZChxJbp4ayghuLqO" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -34,6 +67,11 @@
     "kotlin-language-version-configured": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\km250542\IdeaProjects\CSV_SQL\src\main\java\dto" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />

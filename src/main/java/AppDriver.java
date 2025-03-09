@@ -1,63 +1,54 @@
 import com.opencsv.exceptions.CsvException;
-import hibernate.SessionFactoryMaker;
-import models.entity.DynamicData;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import services.CsvReader;
+import services.CsvService;
+import services.DbSaver;
+import services.impl.CsvServiceImpl;
+import services.impl.DbSaverImpl;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
-public class AppDriver
-{
-    private CsvReader csvReader;
-    private Scanner scanner;
+public class AppDriver {
+    private final CsvService csvReader;
 
-    public AppDriver()
-    {
-        this.csvReader = new CsvReader();
+    private final DbSaver dbSaver;
+
+    private final Scanner scanner;
+
+    public AppDriver() {
+        this.csvReader = new CsvServiceImpl();
+        this.dbSaver = new DbSaverImpl();
         this.scanner = new Scanner(System.in);
     }
 
-    public void start() throws IOException, CsvException
-    {
+    public void start() throws IOException, CsvException {
         System.out.println("\nWelcome to CSV_SQL\n");
         String flag = "";
 
-        while (!flag.equals("q")){
+        while (!flag.equals("q")) {
+            String name = null;
+            System.out.println("Please provide the file name...");
+            name = scanner.nextLine();
             System.out.println("Please provide the path to .csv file...\n");
-            boolean checkFile = false;
+            String path = scanner.nextLine();
+            List<String[]> result = csvReader.convertCsvToList(path);
+
+            if (!result.isEmpty()) {
 
 
-                String path = scanner.nextLine();
-                checkFile = csvReader.readCsvFile(path);
+                dbSaver.saveDynamicData(name, result);
 
-                if(checkFile == true)
-                {
-
-                    List<DynamicData> dynamicList = csvReader.dynamicConvert();
-
-                    SessionFactory factory = SessionFactoryMaker.getFactory();
-
-                    try (Session session = factory.openSession())
-                    {
-                        Transaction transaction = session.beginTransaction();
-                        for (DynamicData d : dynamicList)
-                        {
-                            session.persist(d);
-                        }
-                        transaction.commit();
-                        System.out.println(".csv file added to database :)");
-                    } catch (Exception ex)
-                    {
-                        ex.printStackTrace();
+                System.out.println(".csv file added to database :)");
+                for (String[] x : result) {
+                    for (String c : x) {
+                        System.out.print(c + " ");
                     }
+                    System.out.println();
                 }
+            }
 
-                System.out.println("For continue press enter, if you want quit press q...");
-                flag = scanner.nextLine();
+            System.out.println("For continue press enter, if you want quit press q...");
+            flag = scanner.nextLine();
         }
     }
 }
