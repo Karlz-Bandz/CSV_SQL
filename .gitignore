@@ -1,5 +1,8 @@
 src/main/resources/*
 
-.idea/*
+#Ignore IntelliJ IDEA project files
+/.idea/
+/build/
 
-target/*
+#Ignore build and target directories
+/target/
