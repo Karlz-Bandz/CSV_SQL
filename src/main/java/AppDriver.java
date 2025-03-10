@@ -1,8 +1,8 @@
 import com.opencsv.exceptions.CsvException;
 import services.CsvService;
-import services.DbSaver;
+import services.DbService;
 import services.impl.CsvServiceImpl;
-import services.impl.DbSaverImpl;
+import services.impl.DbServiceImpl;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,13 +11,13 @@ import java.util.Scanner;
 public class AppDriver {
     private final CsvService csvReader;
 
-    private final DbSaver dbSaver;
+    private final DbService dbSaver;
 
     private final Scanner scanner;
 
     public AppDriver() {
         this.csvReader = new CsvServiceImpl();
-        this.dbSaver = new DbSaverImpl();
+        this.dbSaver = new DbServiceImpl();
         this.scanner = new Scanner(System.in);
     }
 
@@ -27,23 +27,43 @@ public class AppDriver {
 
         while (!flag.equals("q")) {
             String name = null;
-            System.out.println("Please provide the file name...");
-            name = scanner.nextLine();
-            System.out.println("Please provide the path to .csv file...\n");
-            String path = scanner.nextLine();
-            List<String[]> result = csvReader.convertCsvToList(path);
+            String choseProgram = null;
+            System.out.println("If you want to read file provide 1 and click enter else just click enter...");
+            choseProgram = scanner.nextLine();
 
-            if (!result.isEmpty()) {
+            if (choseProgram.equals("1")) {
+                String fileName = null;
+                System.out.println("Please provide the file name...");
+                fileName = scanner.nextLine();
 
+                List<Object[]> rows = dbSaver.getDynamicDataRowsByName(fileName);
 
-                dbSaver.saveDynamicData(name, result);
-
-                System.out.println(".csv file added to database :)");
-                for (String[] x : result) {
-                    for (String c : x) {
-                        System.out.print(c + " ");
+                if (rows != null) {
+                    for (Object[] obj: rows) {
+                        System.out.print(obj[2]);
                     }
-                    System.out.println();
+                } else {
+                    System.out.println("Dynamic data not exists!");
+                }
+
+            } else {
+                System.out.println("Please provide the file name...");
+                name = scanner.nextLine();
+                System.out.println("Please provide the path to .csv file...\n");
+                String path = scanner.nextLine();
+                List<String[]> result = csvReader.convertCsvToList(path);
+
+                if (!result.isEmpty()) {
+
+                    dbSaver.saveDynamicData(name, result);
+
+                    System.out.println(".csv file added to database :)");
+                    for (String[] x : result) {
+                        for (String c : x) {
+                            System.out.print(c + " ");
+                        }
+                        System.out.println();
+                    }
                 }
             }
 
