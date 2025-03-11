@@ -1,21 +1,20 @@
 package hibernate;
 
-import models.entity.DynamicData;
-import models.entity.MainData;
+import model.DynamicData;
+import model.DynamicRow;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class SessionFactoryMaker
-{
+public class SessionFactoryMaker {
     private static SessionFactory sessionFactory;
 
-    private static void configureFactory()
-    {
+    private static void configureFactory() {
         try {
             sessionFactory = new Configuration()
-                    .addAnnotatedClass(MainData.class)
                     .addAnnotatedClass(DynamicData.class)
-                    .configure().buildSessionFactory();
+                    .addAnnotatedClass(DynamicRow.class)
+                    .configure()
+                    .buildSessionFactory();
         } catch (Throwable ex) {
             System.err.println("Failed to create sessionFactory object." + ex);
             throw new ExceptionInInitializerError(ex);

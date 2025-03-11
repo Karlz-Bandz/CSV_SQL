@@ -1,63 +1,86 @@
 import com.opencsv.exceptions.CsvException;
-import hibernate.SessionFactoryMaker;
-import models.entity.DynamicData;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import services.CsvReader;
+import services.CsvService;
+import services.DbService;
+import services.impl.CsvServiceImpl;
+import services.impl.DbServiceImpl;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
-public class AppDriver
-{
-    private CsvReader csvReader;
-    private Scanner scanner;
+public class AppDriver {
+    private final CsvService csvReader;
 
-    public AppDriver()
-    {
-        this.csvReader = new CsvReader();
+    private final DbService dbSaver;
+
+    private final Scanner scanner;
+
+    public AppDriver() {
+        this.csvReader = new CsvServiceImpl();
+        this.dbSaver = new DbServiceImpl();
         this.scanner = new Scanner(System.in);
     }
 
-    public void start() throws IOException, CsvException
-    {
+    public void start() throws IOException, CsvException {
         System.out.println("\nWelcome to CSV_SQL\n");
         String flag = "";
 
-        while (!flag.equals("q")){
-            System.out.println("Please provide the path to .csv file...\n");
-            boolean checkFile = false;
+        while (!flag.equals("q")) {
+            String name = null;
+            String choseProgram = null;
+            System.out.println("If you want to read/delete file provide 1 and click enter else just click enter...");
+            choseProgram = scanner.nextLine();
 
+            if (choseProgram.equals("1")) {
+                System.out.println("Delete press d and enter/Read press enter...");
+                String program = scanner.nextLine();
 
-                String path = scanner.nextLine();
-                checkFile = csvReader.readCsvFile(path);
+                if (program.toLowerCase().equals("d")) {
+                    System.out.println("Please provide the filename to delete...");
+                    String fileNameToDelete = scanner.nextLine();
 
-                if(checkFile == true)
-                {
+                    dbSaver.deleteDynamicDataByFileName(fileNameToDelete);
 
-                    List<DynamicData> dynamicList = csvReader.dynamicConvert();
+                    System.out.println("File deleted!");
 
-                    SessionFactory factory = SessionFactoryMaker.getFactory();
+                } else {
+                    String fileName = null;
+                    System.out.println("Please provide the file name...");
+                    fileName = scanner.nextLine();
 
-                    try (Session session = factory.openSession())
-                    {
-                        Transaction transaction = session.beginTransaction();
-                        for (DynamicData d : dynamicList)
-                        {
-                            session.persist(d);
+                    List<Object[]> rows = dbSaver.getDynamicDataByFileName(fileName);
+
+                    if (rows != null) {
+                        for (Object[] obj : rows) {
+                            System.out.println(obj[2]);
                         }
-                        transaction.commit();
-                        System.out.println(".csv file added to database :)");
-                    } catch (Exception ex)
-                    {
-                        ex.printStackTrace();
+                    } else {
+                        System.out.println("Dynamic data not exists!");
                     }
                 }
+            } else {
+                System.out.println("Please provide the file name...");
+                name = scanner.nextLine();
+                System.out.println("Please provide the path to .csv file...\n");
+                String path = scanner.nextLine();
+                List<String[]> result = csvReader.convertCsvToList(path);
 
-                System.out.println("For continue press enter, if you want quit press q...");
-                flag = scanner.nextLine();
+                if (!result.isEmpty()) {
+
+                    dbSaver.saveDynamicData(name, result);
+
+                    System.out.println(".csv file added to database :)");
+                    for (String[] x : result) {
+                        for (String c : x) {
+                            System.out.print(c + " ");
+                        }
+                        System.out.println();
+                    }
+                }
+            }
+
+            System.out.println("For continue press enter, if you want quit press q...");
+            flag = scanner.nextLine();
         }
     }
 }
