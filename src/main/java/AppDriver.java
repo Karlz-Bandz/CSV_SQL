@@ -36,7 +36,7 @@ public class AppDriver {
                 System.out.println("Please provide the file name...");
                 fileName = scanner.nextLine();
 
-                List<Object[]> rows = dbSaver.getDynamicDataRowsByName(fileName);
+                List<Object[]> rows = dbSaver.getDynamicDataByFileName(fileName);
 
                 if (rows != null) {
                     for (Object[] obj: rows) {

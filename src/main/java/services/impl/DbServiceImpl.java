@@ -14,15 +14,15 @@ import java.util.List;
 public class DbServiceImpl implements DbService {
 
     @Override
-    public List<Object[]> getDynamicDataRowsByName(String name) {
-        try (Session session = SessionFactoryMaker.getFactory().openSession()){
+    public List<Object[]> getDynamicDataByFileName(String name) {
+        try (Session session = SessionFactoryMaker.getFactory().openSession()) {
             String hql = """
-                  SELECT r.id, d.name, v
-                  FROM DynamicRow r
-                  JOIN r.dynamicData d
-                  JOIN r.records v
-                  WHERE d.name = :name
-                  """;
+                    SELECT r.id, d.name, v
+                    FROM DynamicRow r
+                    JOIN r.dynamicData d
+                    JOIN r.records v
+                    WHERE d.name = :name
+                    """;
             Query<Object[]> query = session.createQuery(hql, Object[].class)
                     .setParameter("name", name);
 
