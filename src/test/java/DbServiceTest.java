@@ -6,6 +6,7 @@ import services.impl.DbServiceImpl;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DbServiceTest {
 
@@ -14,6 +15,16 @@ class DbServiceTest {
     @BeforeEach
     void setUp() {
         dbService = new DbServiceImpl();
+    }
+
+    @Test
+    void deleteDynamicDataByFileNameTest_SUCCESS() {
+        String fileName = "test669";
+
+        dbService.deleteDynamicDataByFileName(fileName);
+        List<Object[]> solution = dbService.getDynamicDataByFileName(fileName);
+
+        assertTrue(solution.isEmpty());
     }
 
     @Test

@@ -14,7 +14,39 @@ import java.util.List;
 public class DbServiceImpl implements DbService {
 
     @Override
-    public List<Object[]> getDynamicDataByFileName(String name) {
+    public void deleteDynamicDataByFileName(String fileName) {
+        try (Session session = SessionFactoryMaker.getFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            session.createNativeMutationQuery("""
+                            DELETE FROM record_values
+                            WHERE dynamic_row_id
+                            IN (SELECT id FROM dynamic_row WHERE dynamic_data_id
+                            IN (SELECT id FROM dynamic_data WHERE name = :name))
+                            """)
+                    .setParameter("name", fileName)
+                    .executeUpdate();
+
+            session.createNativeMutationQuery("""
+                            DELETE FROM dynamic_row
+                            WHERE dynamic_data_id
+                            IN (SELECT id FROM dynamic_data WHERE name = :name)
+                            """)
+                    .setParameter("name", fileName)
+                    .executeUpdate();
+
+            session.createNativeMutationQuery("""
+                            DELETE FROM dynamic_data WHERE name = :name
+                            """)
+                    .setParameter("name", fileName)
+                    .executeUpdate();
+
+            transaction.commit();
+        }
+    }
+
+    @Override
+    public List<Object[]> getDynamicDataByFileName(String fileName) {
         try (Session session = SessionFactoryMaker.getFactory().openSession()) {
             String hql = """
                     SELECT r.id, d.name, v
@@ -24,23 +56,20 @@ public class DbServiceImpl implements DbService {
                     WHERE d.name = :name
                     """;
             Query<Object[]> query = session.createQuery(hql, Object[].class)
-                    .setParameter("name", name);
+                    .setParameter("name", fileName);
 
             return query.getResultList();
         }
     }
 
     @Override
-    public void saveDynamicData(String name, List<String[]> rows) {
-
-        Transaction transaction = null;
-
+    public void saveDynamicData(String fileName, List<String[]> rows) {
         try (Session session = SessionFactoryMaker.getFactory().openSession()) {
 
-            transaction = session.beginTransaction();
+            Transaction transaction = session.beginTransaction();
 
             DynamicData dynamicData = new DynamicData();
-            dynamicData.setName(name);
+            dynamicData.setName(fileName);
 
             session.persist(dynamicData);
 
@@ -54,12 +83,6 @@ public class DbServiceImpl implements DbService {
                 session.persist(dynamicRow);
             }
             transaction.commit();
-
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
         }
     }
 }

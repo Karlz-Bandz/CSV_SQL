@@ -28,24 +28,36 @@ public class AppDriver {
         while (!flag.equals("q")) {
             String name = null;
             String choseProgram = null;
-            System.out.println("If you want to read file provide 1 and click enter else just click enter...");
+            System.out.println("If you want to read/delete file provide 1 and click enter else just click enter...");
             choseProgram = scanner.nextLine();
 
             if (choseProgram.equals("1")) {
-                String fileName = null;
-                System.out.println("Please provide the file name...");
-                fileName = scanner.nextLine();
+                System.out.println("Delete press d and enter/Read press enter...");
+                String program = scanner.nextLine();
 
-                List<Object[]> rows = dbSaver.getDynamicDataByFileName(fileName);
+                if (program.toLowerCase().equals("d")) {
+                    System.out.println("Please provide the filename to delete...");
+                    String fileNameToDelete = scanner.nextLine();
 
-                if (rows != null) {
-                    for (Object[] obj: rows) {
-                        System.out.print(obj[2]);
-                    }
+                    dbSaver.deleteDynamicDataByFileName(fileNameToDelete);
+
+                    System.out.println("File deleted!");
+
                 } else {
-                    System.out.println("Dynamic data not exists!");
-                }
+                    String fileName = null;
+                    System.out.println("Please provide the file name...");
+                    fileName = scanner.nextLine();
 
+                    List<Object[]> rows = dbSaver.getDynamicDataByFileName(fileName);
+
+                    if (rows != null) {
+                        for (Object[] obj : rows) {
+                            System.out.println(obj[2]);
+                        }
+                    } else {
+                        System.out.println("Dynamic data not exists!");
+                    }
+                }
             } else {
                 System.out.println("Please provide the file name...");
                 name = scanner.nextLine();
